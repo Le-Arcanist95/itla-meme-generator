@@ -4,8 +4,7 @@ export default function App() {
   const [currMeme, setCurrMeme] = useState({
     topText: "",
     bottomText: "",
-    imgUrl: "",
-    id: 0
+    imgUrl: ""
   });
   const [memeData, setMemeData] = useState([]);
   const [savedMemes, setSavedMemes] = useState([]);
@@ -20,7 +19,8 @@ export default function App() {
     getMemes();
   }, []);
 
-  const newMeme = () => {
+  const newMeme = (event) => {
+    event.preventDefault()
     const newUrl = memeData[Math.floor(Math.random() * memeData.length)].url;
 
     setCurrMeme(prevMeme => ({
@@ -37,14 +37,8 @@ export default function App() {
     }));
   };
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    setCurrMeme(prevMeme => {
-      return {
-        ...prevMeme,
-        id: prevMeme.id++
-      }
-    })
     setSavedMemes(prevList => {
       let newList = prevList;
       newList.push(currMeme);
