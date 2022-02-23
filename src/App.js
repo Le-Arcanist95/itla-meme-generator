@@ -4,7 +4,8 @@ export default function App() {
   const [currMeme, setCurrMeme] = useState({
     topText: "",
     bottomText: "",
-    imgUrl: ""
+    imgUrl: "",
+    id: 0
   });
   const [memeData, setMemeData] = useState([]);
   const [savedMemes, setSavedMemes] = useState([]);
@@ -37,6 +38,12 @@ export default function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    setCurrMeme(prevMeme => {
+      return {
+        ...prevMeme,
+        id: prevMeme.id++
+      }
+    })
     setSavedMemes(prevList => {
       let newList = prevList;
       newList.push(currMeme);
