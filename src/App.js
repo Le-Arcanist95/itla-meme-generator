@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 
 export default function App() {
   const [meme, setMeme] = useState({
@@ -10,16 +11,16 @@ export default function App() {
 
   useEffect(() => {
     const getMemes = async () => {
-      const res = await fetch("https://api.imgflip.com/get_memes");
+      const res = await axios.get("https://api.imgflip.com/get_memes");
       const data = await res.json()
       setMemeData(data.data.memes)
     };
 
     getMemes();
   }, []);
+
   const newMeme = () => {
-    const randomNum = Math.floor(Math.random() * memeData.length);
-    const newUrl = memeData[randomNum].url;
+    const newUrl = memeData[Math.floor(Math.random() * memeData.length)].url;
 
     setMeme(prevMeme => ({
       ...prevMeme,
