@@ -25,7 +25,8 @@ export default function App() {
 
     setCurrMeme(prevMeme => ({
       ...prevMeme,
-      imgUrl: newUrl
+      imgUrl: newUrl,
+      id: memeData.data.id
     }));
   };
   const handleChange = (event) => {
