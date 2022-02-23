@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react';
+import Header from "./components/Header"
+import Form from "./components/Form"
+import MemeList from './components/MemeList';
+import Meme from './components/Meme';
 
 export default function App() {
   const [currMeme, setCurrMeme] = useState({
     topText: "",
     bottomText: "",
-    imgUrl: "",
+    imgUrl: "https:\/\/i.imgflip.com\/4t0m5.jpg",
     id: 0
   });
   const [memeData, setMemeData] = useState([]);
@@ -19,9 +23,10 @@ export default function App() {
 
     getMemes();
   }, []);
-
+  
   const newMeme = (event) => {
-    event.preventDefault()
+    event.preventDefault();
+    
     const newUrl = memeData[Math.floor(Math.random() * memeData.length)].url;
 
     setCurrMeme(prevMeme => ({
@@ -30,6 +35,7 @@ export default function App() {
       id: memeData.data.id
     }));
   };
+  
   const handleChange = (event) => {
     const {name, value} = event.target;
     setCurrMeme(prevMeme => ({
@@ -37,6 +43,7 @@ export default function App() {
       [name]: value
     }));
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -45,9 +52,26 @@ export default function App() {
       newList.push(currMeme);
       return(newList);
     })
-  }
 
+    setCurrMeme(() =>({
+      topText: "",
+      bottomText: "",
+      imgUrl: "https:\/\/i.imgflip.com\/4t0m5.jpg"
+    }))
+    console.log(savedMemes)
+  }
+    
   return(
-    <div>Meme Generator</div>
+    <div>
+      <Header />
+      <Form 
+        memeData={memeData} 
+        currMeme={currMeme} 
+        handleChange={handleChange} 
+        handleSubmit={handleSubmit} 
+        newMeme={newMeme}
+      />
+      <MemeList savedMemes={savedMemes}/>
+    </div>
   )
 }
