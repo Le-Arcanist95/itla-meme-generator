@@ -8,7 +8,8 @@ export default function App() {
   const [currMeme, setCurrMeme] = useState({
     topText: "",
     bottomText: "",
-    imgUrl: "https:\/\/i.imgflip.com\/4t0m5.jpg"
+    imgUrl: "https:\/\/i.imgflip.com\/4t0m5.jpg",
+    id: 0
   });
   const [memeData, setMemeData] = useState([]);
   const [savedMemes, setSavedMemes] = useState([]);
@@ -25,11 +26,13 @@ export default function App() {
   
   const newMeme = (event) => {
     event.preventDefault();
+    
     const newUrl = memeData[Math.floor(Math.random() * memeData.length)].url;
 
     setCurrMeme(prevMeme => ({
       ...prevMeme,
-      imgUrl: newUrl
+      imgUrl: newUrl,
+      id: memeData.data.id
     }));
   };
   
