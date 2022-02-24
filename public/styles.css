@@ -25,6 +25,7 @@ button{
     font-family: 'Manrope', sans-serif;
     font-size: 72px;
     background: -webkit-linear-gradient(#a9d6e5, #89c2d9);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -201,7 +202,7 @@ button{
         2px 2px 5px #000;
 }
 
-.savedMeme--editIcon{
+.savedMeme--Icon{
     position: absolute;
     bottom: -15%;
     left: 55%;

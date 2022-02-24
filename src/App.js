@@ -11,7 +11,8 @@ export default function App() {
     id: 0
   });
   const [memeData, setMemeData] = useState([]);
-  const [savedMemes, setSavedMemes] = useState([]);      
+  const [savedMemes, setSavedMemes] = useState([]); 
+  const [editStorage, setEditStorage] = useState({})     
 
   useEffect(() => {
     const getMemes = async () => {
@@ -47,8 +48,7 @@ export default function App() {
     event.preventDefault();
 
     setSavedMemes(prevList => {
-      let updatedList = prevList;
-      updatedList.push(currMeme);
+      let updatedList = [...prevList, currMeme];
       return(updatedList);
     });
     setCurrMeme(prevMeme =>({
@@ -57,31 +57,19 @@ export default function App() {
       bottomText: "",
       id: prevMeme.id + 1
     }));
+    console.log(savedMemes)
   }
-  const handleDelete = (event) => {
-    event.preventDefault();
-
-    const newSavedMemes = [...savedMemes];
-    const index = event.target.id;
-    newSavedMemes.splice(index, 1);
-    setSavedMemes(newSavedMemes);
+  const handleDelete = (id) => {
+    setSavedMemes(prevMemes => prevMemes.filter(meme => meme.id !== id));
   }
-  const handleEdit = (event) => {
-    event.preventDefault();
 
-    const storedSaves = [...savedMemes];
-    const eventIndex = event.target.id;
-
-    if (event.target.innerText === "edit") {
-      event.target.innerText = "save";
-      setCurrMeme(storedSaves[eventIndex]);
-    } else if (event.target.innerText === "save"){
-      event.target.innerText = "edit";
-      setSavedMemes(() => {
-        storedSaves.splice(eventIndex, 1, currMeme);
-        return(storedSaves);
-      });
-    }
+  const handleEdit = (id) => {
+      setEditStorage({...currMeme});
+      setCurrMeme(savedMemes[id]);
+  }
+  const handleSave = (id) => {
+    setSavedMemes(prevSavedMemes => (prevSavedMemes.map(meme => id === meme.id ? currMeme : meme)));
+    setCurrMeme({...editStorage});
   }
 
   return(
@@ -98,6 +86,7 @@ export default function App() {
         savedMemes={savedMemes}
         handleDelete={handleDelete}
         handleEdit={handleEdit}
+        handleSave={handleSave}
       />
     </div>
   )
