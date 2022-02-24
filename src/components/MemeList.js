@@ -2,10 +2,10 @@ import React from "react"
 import Meme from "./Meme"
 
 export default function MemeList(props){
-    const memes = props.savedMemes.map((item, index) => (
+    const memes = props.savedMemes.map((item) => (
         <Meme 
             key={item.id}
-            id={index}
+            id={item.id}
             topText={item.topText} 
             bottomText={item.bottomText} 
             imgUrl={item.imgUrl}
