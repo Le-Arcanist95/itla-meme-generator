@@ -21,12 +21,12 @@ export default function Form(props){
                     value={props.currMeme.bottomText}
                 />
                 <div className="meme">
-                    <div className="meme--topText">{props.currMeme.topText}</div>
-                    <div className="meme--bottomText">{props.currMeme.bottomText}</div>
-                    <img src={props.currMeme.imgUrl} alt="" className="meme--img"/>
+                    <div className="meme--topText"> {props.currMeme.topText} </div>
+                    <div className="meme--bottomText"> {props.currMeme.bottomText} </div>
+                    <img src={props.currMeme.imgUrl === "" ? "https://github.com/ithomas98/itla-meme-generator/blob/fb96389342229e326763fa7e232898cd8cbb7410/src/pngwing.com.png" : props.currMeme.imgUrl} alt="" className="meme--img"/>
                 </div>
-                <button className="memeForm--saveButton" onClick={props.handleSubmit}>Save Meme</button>
-                <button className="memeForm--newButton" onClick={props.newMeme}>New Image</button>
+                <button className="memeForm--saveButton" onClick={props.handleSubmit}> Save Meme </button>
+                <button className="memeForm--newButton" onClick={props.newMeme}> New Image </button>
             </form>
         </div>
     )

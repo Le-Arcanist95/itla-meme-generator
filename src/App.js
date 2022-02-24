@@ -7,17 +7,17 @@ export default function App() {
   const [currMeme, setCurrMeme] = useState({
     topText: "",
     bottomText: "",
-    imgUrl: "https://i.imgflip.com/4t0m5.jpg",
+    imgUrl: "",
     id: 0
   });
   const [memeData, setMemeData] = useState([]);
-  const [savedMemes, setSavedMemes] = useState([]);
+  const [savedMemes, setSavedMemes] = useState([]);      
 
   useEffect(() => {
     const getMemes = async () => {
       const res = await fetch("https://api.imgflip.com/get_memes");
-      const data = await res.json();
-      setMemeData(data.data.memes);
+      const jsonData = await res.json();
+      setMemeData(jsonData.data.memes);
     };
 
     getMemes();
@@ -25,19 +25,16 @@ export default function App() {
   
   const newMeme = (event) => {
     event.preventDefault();
-    
-    const randomIndex = Math.floor(Math.random() * memeData.length)
 
-    const newUrl = memeData[randomIndex].url;
-    const newId = memeData[randomIndex].id;
+    const randomInt = Math.floor(Math.random() * memeData.length);
+    const newUrl = memeData[randomInt].url;
 
     setCurrMeme(prevMeme => ({
       ...prevMeme,
-      imgUrl: newUrl,
-      id: newId
+      imgUrl: newUrl
     }));
   };
-  
+
   const handleChange = (event) => {
     const {name, value} = event.target;
     setCurrMeme(prevMeme => ({
@@ -50,20 +47,43 @@ export default function App() {
     event.preventDefault();
 
     setSavedMemes(prevList => {
-      let newList = prevList;
-      newList.push(currMeme);
-      return(newList);
-    })
-
-    setCurrMeme(() =>({
+      let updatedList = prevList;
+      updatedList.push(currMeme);
+      return(updatedList);
+    });
+    setCurrMeme(prevMeme =>({
+      ...prevMeme,
       topText: "",
       bottomText: "",
-      imgUrl: "https://i.imgflip.com/4t0m5.jpg",
-      id: 0
-    }))
-    console.log(savedMemes)
+      id: prevMeme.id + 1
+    }));
   }
-    
+  const handleDelete = (event) => {
+    event.preventDefault();
+
+    const newSavedMemes = [...savedMemes];
+    const index = event.target.id;
+    newSavedMemes.splice(index, 1);
+    setSavedMemes(newSavedMemes);
+  }
+  const handleEdit = (event) => {
+    event.preventDefault();
+
+    const storedSaves = [...savedMemes];
+    const eventIndex = event.target.id;
+
+    if (event.target.innerText === "edit") {
+      event.target.innerText = "save";
+      setCurrMeme(storedSaves[eventIndex]);
+    } else if (event.target.innerText === "save"){
+      event.target.innerText = "edit";
+      setSavedMemes(() => {
+        storedSaves.splice(eventIndex, 1, currMeme);
+        return(storedSaves);
+      });
+    }
+  }
+
   return(
     <div>
       <Header />
@@ -74,7 +94,11 @@ export default function App() {
         handleSubmit={handleSubmit} 
         newMeme={newMeme}
       />
-      <MemeList savedMemes={savedMemes}/>
+      <MemeList 
+        savedMemes={savedMemes}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+      />
     </div>
   )
 }
