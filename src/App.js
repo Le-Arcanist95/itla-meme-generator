@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import Header from "./components/Header"
 import Form from "./components/Form"
 import MemeList from './components/MemeList';
-import Meme from './components/Meme';
 
 export default function App() {
   const [currMeme, setCurrMeme] = useState({
@@ -27,12 +26,15 @@ export default function App() {
   const newMeme = (event) => {
     event.preventDefault();
     
-    const newUrl = memeData[Math.floor(Math.random() * memeData.length)].url;
+    const randomIndex = Math.floor(Math.random() * memeData.length)
+
+    const newUrl = memeData[randomIndex].url;
+    const newId = memeData[randomIndex].id;
 
     setCurrMeme(prevMeme => ({
       ...prevMeme,
       imgUrl: newUrl,
-      id: memeData.data.id
+      id: newId
     }));
   };
   
@@ -56,7 +58,8 @@ export default function App() {
     setCurrMeme(() =>({
       topText: "",
       bottomText: "",
-      imgUrl: "https:\/\/i.imgflip.com\/4t0m5.jpg"
+      imgUrl: "https://i.imgflip.com/4t0m5.jpg",
+      id: 0
     }))
     console.log(savedMemes)
   }

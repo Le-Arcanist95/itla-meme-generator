@@ -5,6 +5,7 @@ export default function Form(props){
         <div>
             <form className="memeForm">
                 <input 
+                    className="memeForm--topText"
                     type="text" 
                     placeholder="Top Text" 
                     name="topText"
@@ -12,6 +13,7 @@ export default function Form(props){
                     value={props.currMeme.topText}
                 />
                 <input
+                    className="memeForm--bottomText"
                     type="text" 
                     placeholder="Bottom Text" 
                     name="bottomText"
