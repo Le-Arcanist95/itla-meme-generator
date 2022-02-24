@@ -10,6 +10,7 @@ export default function MemeList(props){
             bottomText={item.bottomText} 
             imgUrl={item.imgUrl}
             handleDelete={props.handleDelete}
+            handleEdit={props.handleEdit}
         />))
 
     return(
