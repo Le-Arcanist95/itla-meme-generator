@@ -8,7 +8,7 @@ export default function App() {
   const [currMeme, setCurrMeme] = useState({
     topText: "",
     bottomText: "",
-    imgUrl: "https:\/\/i.imgflip.com\/4t0m5.jpg",
+    imgUrl: "https://i.imgflip.com/4t0m5.jpg",
     id: 0
   });
   const [memeData, setMemeData] = useState([]);
