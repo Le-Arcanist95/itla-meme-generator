@@ -26,15 +26,13 @@ export default function App() {
   const newMeme = (event) => {
     event.preventDefault();
     
-    const randomIndex = Math.floor(Math.random() * memeData.length)
-
-    const newUrl = memeData[randomIndex].url;
-    const newId = memeData[randomIndex].id;
+    const randomIndex = Math.floor(Math.random() * memeData.length);
+    const {id, url} = memeData[randomIndex];
 
     setCurrMeme(prevMeme => ({
       ...prevMeme,
-      imgUrl: newUrl,
-      id: newId
+      imgUrl: url,
+      id: id
     }));
   };
   
@@ -55,11 +53,10 @@ export default function App() {
       return(newList);
     })
 
-    setCurrMeme(() =>({
+    setCurrMeme(prevMeme =>({
+      ...prevMeme,
       topText: "",
-      bottomText: "",
-      imgUrl: "https://i.imgflip.com/4t0m5.jpg",
-      id: 0
+      bottomText: ""
     }))
     console.log(savedMemes)
   }
