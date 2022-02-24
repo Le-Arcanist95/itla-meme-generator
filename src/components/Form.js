@@ -23,7 +23,7 @@ export default function Form(props){
                 <div className="meme">
                     <div className="meme--topText"> {props.currMeme.topText} </div>
                     <div className="meme--bottomText"> {props.currMeme.bottomText} </div>
-                    <img src={props.currMeme.imgUrl === "" ? "https://github.com/ithomas98/itla-meme-generator/blob/d0bad4ffe3e6d9396c847172ff4979da94f929aa/src/pngwing.com.png" : props.currMeme.imgUrl} alt="" className="meme--img"/>
+                    <img src={props.currMeme.imgUrl === "" ? () => props.newMeme() : props.currMeme.imgUrl} alt="" className="meme--img"/>
                 </div>
                 <button className="memeForm--saveButton" onClick={props.handleSubmit}> Save Meme </button>
                 <button className="memeForm--newButton" onClick={props.newMeme}> New Image </button>

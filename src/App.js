@@ -12,7 +12,7 @@ export default function App() {
   });
   const [memeData, setMemeData] = useState([]);
   const [savedMemes, setSavedMemes] = useState([]); 
-  const [editStorage, setEditStorage] = useState({})     
+  const [editStorage, setEditStorage] = useState({})
 
   useEffect(() => {
     const getMemes = async () => {
@@ -34,6 +34,7 @@ export default function App() {
       ...prevMeme,
       imgUrl: newUrl
     }));
+    return (currMeme.imgUrl);
   };
 
   const handleChange = (event) => {
