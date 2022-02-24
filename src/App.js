@@ -49,24 +49,21 @@ export default function App() {
       let newList = prevList;
       newList.push(currMeme);
       return(newList);
-    })
-
+    });
     setCurrMeme(prevMeme =>({
       ...prevMeme,
       topText: "",
       bottomText: "",
       id: prevMeme.id + 1
-    }))
+    }));
   }
   const handleDelete = (event) => {
     event.preventDefault();
 
+    const newSavedMemes = [...savedMemes];
     const index = event.target.id;
-    console.log(index)
-    setSavedMemes(prevList => {
-      let newList = prevList.splice(index, 1)
-      return(newList)
-    })
+    newSavedMemes.splice(index, 1);
+    setSavedMemes(newSavedMemes)
   }
   return(
     <div>
