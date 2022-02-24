@@ -7,17 +7,18 @@ export default function App() {
   const [currMeme, setCurrMeme] = useState({
     topText: "",
     bottomText: "",
-    imgUrl: "https://i.imgflip.com/4t0m5.jpg",
+    imgUrl: "",
     id: 0
   });
   const [memeData, setMemeData] = useState([]);
-  const [savedMemes, setSavedMemes] = useState([]);
+  const [savedMemes, setSavedMemes] = useState([]);      
+  const randomInt = Math.floor(Math.random() * memeData.length);
 
   useEffect(() => {
     const getMemes = async () => {
       const res = await fetch("https://api.imgflip.com/get_memes");
-      const data = await res.json();
-      setMemeData(data.data.memes);
+      const jsonData = await res.json();
+      setMemeData(jsonData.data.memes);
     };
 
     getMemes();
@@ -25,17 +26,14 @@ export default function App() {
   
   const newMeme = (event) => {
     event.preventDefault();
-    
-    const randomIndex = Math.floor(Math.random() * memeData.length);
-    const {id, url} = memeData[randomIndex];
+    const newUrl = memeData[randomInt].url;
 
     setCurrMeme(prevMeme => ({
       ...prevMeme,
-      imgUrl: url,
-      id: id
+      imgUrl: newUrl
     }));
   };
-  
+
   const handleChange = (event) => {
     const {name, value} = event.target;
     setCurrMeme(prevMeme => ({
@@ -56,11 +54,20 @@ export default function App() {
     setCurrMeme(prevMeme =>({
       ...prevMeme,
       topText: "",
-      bottomText: ""
+      bottomText: "",
+      id: prevMeme.id + 1
     }))
-    console.log(savedMemes)
   }
-    
+  const handleDelete = (event) => {
+    event.preventDefault();
+
+    const index = event.target.id;
+    console.log(index)
+    setSavedMemes(prevList => {
+      let newList = prevList.splice(index, 1)
+      return(newList)
+    })
+  }
   return(
     <div>
       <Header />
@@ -71,7 +78,10 @@ export default function App() {
         handleSubmit={handleSubmit} 
         newMeme={newMeme}
       />
-      <MemeList savedMemes={savedMemes}/>
+      <MemeList 
+        savedMemes={savedMemes}
+        handleDelete={handleDelete}
+      />
     </div>
   )
 }
