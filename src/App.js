@@ -81,6 +81,7 @@ export default function App() {
         currMeme={currMeme} 
         handleChange={handleChange} 
         handleSubmit={handleSubmit} 
+        handleSave={handleSave} 
         newMeme={newMeme}
       />
       <MemeList 
